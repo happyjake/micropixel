@@ -93,6 +93,7 @@ apps_store="$apps_output_dir/app-store.bin"
 host_build_dir="${S3_HOST_BUILD_DIR:-$workspace_root/build/host-esp32s3-box-3}"
 szpi_host_build_dir="${SZPI_S3_HOST_BUILD_DIR:-$workspace_root/build/host-esp32s3-szpi}"
 cores3_host_build_dir="${CORES3_S3_HOST_BUILD_DIR:-$workspace_root/build/host-esp32s3-cores3}"
+rlcd42_host_build_dir="${RLCD42_S3_HOST_BUILD_DIR:-$workspace_root/build/host-esp32s3-rlcd42}"
 watcher_host_build_dir="${WATCHER_S3_HOST_BUILD_DIR:-$workspace_root/build/host-esp32s3-watcher}"
 # The SenseCAP Watcher's app_store partition is 24 MiB, so its BundleFS geometry
 # differs from the shared 8 MiB image. It gets its own staging directory to keep
@@ -105,7 +106,7 @@ usage() {
     cat <<'EOF'
 Usage: bash tools/s3.sh COMMAND [BOARD] [PORT] [--reset]
 
-Boards: box3 (default), szpi, cores3, watcher
+Boards: box3 (default), szpi, cores3, watcher, rlcd42
 
 Common ESP32-S3 commands:
   build-null          Compile the ESP32-S3 hardware-independent Null gate.
@@ -356,7 +357,7 @@ resolve_profile_port() {
 
 is_board_name() {
     case "${1:-}" in
-        box3 | esp-box-3 | szpi | szpi-esp32s3 | cores3 | m5stack-cores3) return 0 ;;
+        box3 | esp-box-3 | szpi | szpi-esp32s3 | cores3 | m5stack-cores3 | rlcd42 | waveshare-rlcd42) return 0 ;;
         watcher | sensecap-watcher) return 0 ;;
         *) return 1 ;;
     esac
@@ -397,6 +398,17 @@ select_board() {
             board_apps_store="$apps_store"
             board_app_store_size="0x0800000"
             ;;
+        rlcd42 | waveshare-rlcd42)
+            board_name="rlcd42"
+            board_title="Waveshare ESP32-S3-RLCD-4.2"
+            board_profile="waveshare-rlcd42"
+            board_build_dir="$rlcd42_host_build_dir"
+            board_defaults=(sdkconfig.s3.defaults sdkconfig.s3-rlcd42.defaults)
+            board_baud="${RLCD42_S3_BAUD:-921600}"
+            board_apps_output_dir="$apps_output_dir"
+            board_apps_store="$apps_store"
+            board_app_store_size="0x0800000"
+            ;;
         watcher | sensecap-watcher)
             board_name="watcher"
             board_title="SenseCAP Watcher"
@@ -409,7 +421,7 @@ select_board() {
             board_app_store_size="0x1800000"
             ;;
         *)
-            echo "Unknown ESP32-S3 board: $1 (expected box3, szpi, cores3, or watcher)" >&2
+            echo "Unknown ESP32-S3 board: $1 (expected box3, szpi, cores3, watcher, or rlcd42)" >&2
             exit 2
             ;;
     esac

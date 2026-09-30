@@ -23,8 +23,11 @@ class EspLcdTouchInput final : public device::Input {
     ~EspLcdTouchInput() override;
 
     [[nodiscard]] esp_err_t Initialize(esp_lcd_touch_handle_t touch, buses::I2cExecutor& executor);
+    // Injection-only mode for a board with no touch controller: touches still
+    // arrive through InjectTouch (USB development input, remote sequences).
+    [[nodiscard]] esp_err_t InitializeVirtual();
     [[nodiscard]] esp_err_t Start(lv_display_t* display);
-    [[nodiscard]] bool Available() const { return touch_ != nullptr; }
+    [[nodiscard]] bool Available() const { return touch_ != nullptr || virtual_; }
 
     [[nodiscard]] int32_t GetInfo(micropixel_input_info_t& info) override;
     void BindTouchSink(device::TouchSink sink, void* context) override;
@@ -50,6 +53,7 @@ class EspLcdTouchInput final : public device::Input {
     int32_t height_{};
     uint8_t max_touch_points_{};
     esp_lcd_touch_handle_t touch_{};
+    bool virtual_{};
     lv_display_t* display_{};
     buses::I2cExecutor* executor_{};
     esp_timer_handle_t poll_timer_{};

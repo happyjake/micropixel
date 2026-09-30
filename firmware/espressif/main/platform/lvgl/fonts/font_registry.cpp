@@ -35,7 +35,7 @@ uint16_t DynamicHandle(uint32_t index, uint16_t generation) {
 
 const lv_font_t* ProfileFont(SystemFontRole role) {
 #if CONFIG_MICROPIXEL_BOARD_ESP32_S3_BOX_3 || CONFIG_MICROPIXEL_BOARD_SZPI_ESP32S3 || \
-    CONFIG_MICROPIXEL_BOARD_M5STACK_CORES3
+    CONFIG_MICROPIXEL_BOARD_M5STACK_CORES3 || CONFIG_MICROPIXEL_BOARD_WAVESHARE_RLCD_4_2
     switch (role) {
         case SystemFontRole::kTitle:
             return &font_builtin_latin_18;

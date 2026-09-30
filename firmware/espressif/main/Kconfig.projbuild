@@ -176,6 +176,16 @@ menu "MicroPixel board backends"
             BOOT key, expansion GPIO, Guest Graphics and App Hall. Camera,
             microphone and SD card remain outside the board profile.
 
+    config MICROPIXEL_BOARD_WAVESHARE_RLCD_4_2
+        bool "Waveshare ESP32-S3-RLCD-4.2 board profile"
+        depends on IDF_TARGET_ESP32S3
+        help
+            Bring up the Waveshare ESP32-S3-RLCD-4.2's 400x300 ST7305
+            reflective LCD (the 320x240 landscape profile letterboxed and
+            thresholded to 1bpp), BOOT/KEY buttons, ES8311 audio output and
+            native Wi-Fi. There is no touch controller; touches arrive through
+            USB development input and remote sequences.
+
     config MICROPIXEL_BOARD_M5STACK_CORES3
         bool "M5Stack CoreS3 board profile"
         depends on IDF_TARGET_ESP32S3

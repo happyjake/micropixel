@@ -49,7 +49,23 @@ esp_err_t EspLcdTouchInput::Initialize(esp_lcd_touch_handle_t touch, buses::I2cE
     return ESP_OK;
 }
 
+esp_err_t EspLcdTouchInput::InitializeVirtual() {
+    if (touch_ != nullptr || width_ <= 0 || height_ <= 0 || max_touch_points_ == 0U ||
+        max_touch_points_ > micropixel::device::kMaxTouchPoints) {
+        return ESP_ERR_INVALID_ARG;
+    }
+    virtual_ = true;
+    return ESP_OK;
+}
+
 esp_err_t EspLcdTouchInput::Start(lv_display_t* display) {
+    if (virtual_) {
+        if (display == nullptr) {
+            return ESP_ERR_INVALID_STATE;
+        }
+        display_ = display;
+        return ESP_OK;
+    }
     if (touch_ == nullptr || executor_ == nullptr || display == nullptr) {
         return ESP_ERR_INVALID_STATE;
     }

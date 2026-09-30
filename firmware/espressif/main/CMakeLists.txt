@@ -15,7 +15,7 @@ set(micropixel_builtin_font_generated_sources
     "${micropixel_builtin_font_output_dir}/font_builtin_latin_32.c"
 )
 if(CONFIG_MICROPIXEL_BOARD_ESP32_S3_BOX_3 OR CONFIG_MICROPIXEL_BOARD_SZPI_ESP32S3 OR
-   CONFIG_MICROPIXEL_BOARD_M5STACK_CORES3)
+   CONFIG_MICROPIXEL_BOARD_M5STACK_CORES3 OR CONFIG_MICROPIXEL_BOARD_WAVESHARE_RLCD_4_2)
     set(micropixel_builtin_font_sources
         "${micropixel_builtin_font_output_dir}/font_builtin_latin_10.c"
         "${micropixel_builtin_font_output_dir}/font_builtin_latin_12.c"
@@ -91,7 +91,7 @@ else()
         "${CMAKE_CURRENT_LIST_DIR}/platform/lvgl/fonts/vendor/Montserrat-Medium.ttf" BINARY)
 endif()
 if(CONFIG_MICROPIXEL_BOARD_ESP32_S3_BOX_3 OR CONFIG_MICROPIXEL_BOARD_SZPI_ESP32S3 OR
-   CONFIG_MICROPIXEL_BOARD_M5STACK_CORES3)
+   CONFIG_MICROPIXEL_BOARD_M5STACK_CORES3 OR CONFIG_MICROPIXEL_BOARD_WAVESHARE_RLCD_4_2)
     # Compact ESP32-S3 boards allocate the LVGL object pool from PSRAM at lv_init(). Their explicit
     # caps allocator avoids relying on target-specific external-BSS placement.
     target_include_directories(${micropixel_lvgl_lib} PRIVATE

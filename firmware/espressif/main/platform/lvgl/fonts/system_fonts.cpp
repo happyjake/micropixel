@@ -20,7 +20,7 @@ MICROPIXEL_EXT_RAM_BSS lv_font_t micropixel_system_font_default;
 namespace micropixel::platform::lvgl {
 namespace {
 #if CONFIG_MICROPIXEL_BOARD_ESP32_S3_BOX_3 || CONFIG_MICROPIXEL_BOARD_SZPI_ESP32S3 || \
-    CONFIG_MICROPIXEL_BOARD_M5STACK_CORES3
+    CONFIG_MICROPIXEL_BOARD_M5STACK_CORES3 || CONFIG_MICROPIXEL_BOARD_WAVESHARE_RLCD_4_2
 constexpr std::array<int, 4> kSizes{10, 12, 14, 18};
 #elif CONFIG_MICROPIXEL_BOARD_ESP_MOSAICO
 constexpr std::array<int, 4> kSizes{14, 16, 20, 26};
